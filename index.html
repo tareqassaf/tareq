@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valentine Microsite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+
+    <main class="app">
+      <section id="splashScreen" class="screen screen--active" aria-labelledby="introTitle">
+        <div class="panel sticker-card center">
+          <p class="badge">💘</p>
+          <h1 id="introTitle" class="title"></h1>
+          <div class="counter-wrap">
+            <p>عدد الأيام: <strong id="splashDays">0</strong></p>
+            <p>≈ عدد الأسابيع: <strong id="splashWeeks">0</strong></p>
+          </div>
+          <button id="startBtn" class="btn btn-primary">ابدأ</button>
+        </div>
+      </section>
+
+      <section id="homeScreen" class="screen" aria-labelledby="homeTitle" hidden>
+        <header class="topbar sticker-card">
+          <div>
+            <h2 id="homeTitle">حكايـتنا 💗</h2>
+            <p class="muted">من تاريخ: <span id="startDateText"></span></p>
+            <p>عدد الأيام: <strong id="homeDays">0</strong> | ≈ عدد الأسابيع: <strong id="homeWeeks">0</strong></p>
+          </div>
+          <button id="resetTopBtn" class="btn btn-ghost">تصفير اللعبة</button>
+        </header>
+
+        <div class="cards-grid">
+          <button class="feature-card" data-modal="letter">
+            <span class="icon">💌</span>
+            <span>الرسالة</span>
+          </button>
+          <button class="feature-card" data-modal="flower">
+            <span class="icon">🌹</span>
+            <span>الورد</span>
+          </button>
+          <button class="feature-card" data-modal="envelopes">
+            <span class="icon">💸</span>
+            <span>الظروف</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <div id="modal" class="modal" hidden>
+      <div class="modal__backdrop" data-close="true"></div>
+      <section
+        class="modal__dialog sticker-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <button class="modal__close" id="modalCloseBtn" aria-label="إغلاق">✕</button>
+        <div id="modalContent"></div>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
