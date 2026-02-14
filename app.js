@@ -84,13 +84,33 @@ function renderCounters() {
 }
 
 function getAttempt() {
-  const value = Number(localStorage.getItem(ATTEMPT_KEY));
-  if (!Number.isInteger(value) || value < 0) return 0;
-  return Math.min(value, 3);
+  try {
+    if (typeof localStorage === "undefined") {
+      return 0;
+    }
+    const raw = localStorage.getItem(ATTEMPT_KEY);
+    if (raw === null) {
+      return 0;
+    }
+    const value = Number(raw);
+    if (!Number.isInteger(value) || value < 0) return 0;
+    return Math.min(value, 3);
+  } catch (e) {
+    // If accessing localStorage fails (disabled, quota exceeded, etc.), fall back to 0 attempts.
+    return 0;
+  }
 }
 
 function setAttempt(value) {
-  localStorage.setItem(ATTEMPT_KEY, String(Math.max(0, Math.min(3, value))));
+  const clamped = Math.max(0, Math.min(3, value));
+  try {
+    if (typeof localStorage === "undefined") {
+      return;
+    }
+    localStorage.setItem(ATTEMPT_KEY, String(clamped));
+  } catch (e) {
+    // Ignore storage errors to avoid breaking the game flow.
+  }
 }
 
 function clearRevealTimers() {
