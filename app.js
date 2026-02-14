@@ -38,10 +38,37 @@ const modalCloseBtn = document.getElementById("modalCloseBtn");
 const confettiCanvas = document.getElementById("confettiCanvas");
 
 function getCounters(startDate) {
-  const [year, month, day] = startDate.split("-").map(Number);
-  const startUTC = Date.UTC(year, month - 1, day);
+  // Validate startDate is a proper YYYY-MM-DD string and represents a real calendar date
+  if (typeof startDate !== "string") {
+    return { days: 0, weeks: 0 };
+  }
+
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(startDate);
+  if (!match) {
+    return { days: 0, weeks: 0 };
+  }
+
+  const year = parseInt(match[1], 10);
+  const month = parseInt(match[2], 10);
+  const day = parseInt(match[3], 10);
+
+  // Construct date in UTC and verify components to catch invalid dates like 2024-13-01
+  const startDateObj = new Date(Date.UTC(year, month - 1, day));
+  if (
+    startDateObj.getUTCFullYear() !== year ||
+    startDateObj.getUTCMonth() !== month - 1 ||
+    startDateObj.getUTCDate() !== day
+  ) {
+    return { days: 0, weeks: 0 };
+  }
+
+  const startUTC = startDateObj.getTime();
   const now = new Date();
-  const nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  const nowUTC = Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate()
+  );
   const days = Math.max(0, Math.floor((nowUTC - startUTC) / 86400000));
   const weeks = Math.floor(days / 7);
   return { days, weeks };
