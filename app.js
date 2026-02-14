@@ -10,7 +10,11 @@ const config = {
 
 const ATTEMPT_KEY = "valentine_attempt_v1";
 const SECOND = 1000;
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const motionMediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+let reducedMotion = motionMediaQuery.matches;
+motionMediaQuery.addEventListener("change", (event) => {
+  reducedMotion = event.matches;
+});
 
 const state = {
   currentModal: null,
